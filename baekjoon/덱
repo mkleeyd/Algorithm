@@ -1,0 +1,58 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException{ 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int size = Integer.parseInt(br.readLine());
+		Deque<Integer> deq = new LinkedList<>();
+	
+		StringBuilder sb = new StringBuilder();
+		
+		while(size-- > 0) {
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+			String strToken = null;
+			int intToken = 0;
+			
+			if (st.countTokens() == 1) {
+				strToken = st.nextToken();
+			}
+			else {
+				strToken = st.nextToken();
+				intToken = Integer.parseInt(st.nextToken());;
+			}
+			switch(strToken) {
+				case "push_front" : deq.offerFirst(intToken);
+					break;
+				case "push_back" : deq.offerLast(intToken);
+					break;
+				case "pop_front" : sb.append(deq.peekFirst() == null? -1 : deq.peekFirst()).append("\n");
+								   deq.pollFirst();	
+					break;
+				case "pop_back" : sb.append(deq.peekLast() == null? -1 : deq.peekLast()).append("\n");
+								  deq.pollLast();	
+					break;
+				case "size" : sb.append(deq.size()).append("\n");
+					break;
+				case "empty" : sb.append(deq.isEmpty() == true? 1 : 0).append("\n");
+					break;
+				case "front" : sb.append(deq.peekFirst() == null? -1 : deq.peekFirst()).append("\n");
+					break;
+				case "back" : sb.append(deq.peekLast() == null? -1 : deq.peekLast()).append("\n");
+					break;
+				default : 
+					break;
+			}
+		}
+		
+		System.out.println(sb);
+
+	}///
+
+
+}/////
