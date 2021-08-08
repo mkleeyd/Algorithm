@@ -1,0 +1,49 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+	
+	static int N;
+	static int[] dayArr;
+	static int[] payArr;
+	static int max;
+	
+    public static void main(String[] args) throws NumberFormatException, IOException {
+
+    	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(in.readLine());
+        dayArr = new int[N + 2];
+        payArr = new int[N + 2];
+        
+        for (int i = 1; i <= N; i++) {
+            StringTokenizer st = new StringTokenizer(in.readLine());
+            dayArr[i] = Integer.parseInt(st.nextToken());
+            payArr[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        recursion(1, 0);
+        System.out.println(max);
+        
+    }///
+	
+    public static void recursion(int index, int sumEnding) {
+    	
+    	if (max < sumEnding) {
+			max = sumEnding;
+		}
+    	
+    	if (index >= N + 1) {
+			return;
+		}
+    	
+    	int day = index + dayArr[index];
+    	if (day <= N + 1) {
+    		recursion(day, sumEnding + payArr[index]);
+		}
+    	recursion(index+1, sumEnding);
+    	
+    }///
+    
+}/////
