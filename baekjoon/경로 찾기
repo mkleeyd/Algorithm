@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main{
+	
+	static int[][] graph;
+	static int[][] result;
+	static boolean[] visited;
+	static int v;
+	
+    public static void main(String[] args) throws IOException{
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	v = Integer.parseInt(br.readLine());
+    	graph = new int[v+1][v+1];
+    	
+    	for (int i = 1; i < v + 1; i++) {
+    		StringTokenizer stn = new StringTokenizer(br.readLine());
+			for (int j = 1; j < v+1; j++) {
+				int v1 = Integer.parseInt(stn.nextToken());
+					graph[i][j] = v1;
+			}
+		}
+    	
+    	visited = new boolean[v+1];
+    	result = new int[v+1][v+1];
+    	
+    	for (int i = 1; i < v + 1; i++) {
+
+			for (int j = 1; j < v + 1; j++) {
+				visited[j] = false;
+			}
+			
+			for (int j = 1; j < v + 1; j++) {
+				if(graph[i][j] == 1 && visited[j] == false) {		
+					dfs(i, j);
+				}
+			}
+		}
+    	
+    	for (int i = 1; i < v+1; i++) {
+			for (int j = 1; j < v+1; j++) {
+				System.out.print(result[i][j]+" ");
+			}
+			System.out.println();
+		}
+    	
+    }///
+    
+    
+    public static void dfs(int v1, int v2) {
+    	visited[v2] = true;	
+    	result[v1][v2] = 1;	
+    	
+    	for (int i = 1; i < v + 1; i++) {	
+			if (graph[v2][i] == 1 && visited[i] == false) {		 
+				visited[i] = true;
+				dfs(v1, i);	
+			}
+		}
+    	
+    }///
+    
+}/////
