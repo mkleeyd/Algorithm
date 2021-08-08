@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int v = Integer.parseInt(st.nextToken());	  
+		int e = Integer.parseInt(st.nextToken());		 
+		
+		int[] eCnt = new int[v+1];
+		
+		ArrayList<Integer>[] graph = new ArrayList[v+1];
+		for (int i = 1; i < v + 1; i++) {
+			graph[i] = new ArrayList<Integer>();
+		}
+		
+		for (int i = 0; i < e; i++) {
+			st = new StringTokenizer(br.readLine());
+			int v1 = Integer.parseInt(st.nextToken());
+			int v2 = Integer.parseInt(st.nextToken());
+			
+			graph[v1].add(v2);	 
+			eCnt[v2]++;			 
+		}
+		
+		Queue<Integer> que = new LinkedList<>();
+		for (int i = 1; i < v + 1; i++) {
+			if (eCnt[i] == 0) {
+				que.offer(i);
+			}
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		while(!que.isEmpty()) {
+			int vertex = que.poll();
+			sb.append(vertex+" ");
+			for (int i = 0; i < graph[vertex].size(); i++) {
+				int connectEdge = graph[vertex].get(i);
+				eCnt[connectEdge]--;
+				if (eCnt[connectEdge] == 0) {
+					que.offer(connectEdge);
+				}
+			}
+		}
+		System.out.println(sb);
+		br.close();
+	}///
+	
+	
+	
+}/////
