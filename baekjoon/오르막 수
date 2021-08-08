@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Iterator;
+
+public class Main {
+	
+	static int[][] dp;
+	final static int mod = 10007;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		dp = new int[n+1][10];
+		
+		for (int i = 0; i <= 9; i++) {
+			dp[1][i] = 1;
+		}
+		
+		int ans = 0;
+		for (int i = 0; i <= 9; i++) {
+			ans += dfs(n, i);
+		}
+		System.out.println(ans%mod);
+		
+	}///
+
+	public static int dfs(int n, int idx){
+		if (n == 1) {
+			return 1;
+		}
+		
+		if (dp[n][idx] == 0) {
+			for (int i = 0; i <= 9; i++) {
+				if (i == 0) dp[n][i] = dfs(n-1, i); 
+				else dp[n][i] = (dfs(n-1, i) + dfs(n, i-1))%mod;
+				
+			}
+		}
+		return dp[n][idx];
+	}///
+	
+	
+
+}/////
