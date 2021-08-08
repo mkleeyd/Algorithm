@@ -1,0 +1,95 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	
+	static int m,n;
+	static int[][] arr;
+	static boolean[][] visited;
+	static int[] dy = {0,0,1,-1};	// 행
+	static int[] dx = {1,-1,0,0};	// 열
+	static Queue<Node> que;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());	// 열
+		m = Integer.parseInt(st.nextToken());	// 행
+		arr = new int[m+1][n+1];				 
+		
+		for (int i = 1; i < m+1; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 1; j < n+1; j++) {
+				arr[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		
+		visited = new boolean[m+1][n+1];
+		que = new LinkedList<Node>();
+		for (int i = 1; i < m+1; i++) {
+			for (int j = 1; j < n+1; j++) {
+				if (arr[i][j] == 1) {
+					que.offer(new Node(i,j));
+					visited[i][j] = true;
+				}
+			}
+		}
+		bfs();
+		
+		int max = Integer.MIN_VALUE;
+		for (int i = 1; i < m+1; i++) {
+			for (int j = 1; j < n+1; j++) {
+				if (arr[i][j] == 0) {
+					System.out.println(-1);
+					return;	
+				}
+				else if (max < arr[i][j]) {
+					max = arr[i][j];
+				}
+			}
+		}
+		if (max == 1) System.out.println(0);
+		else System.out.println(max-1);
+		
+		
+	}///
+	
+	public static void bfs() {
+		
+		while(!que.isEmpty()) {
+			Node current = que.poll();
+			
+			for (int i = 0; i < 4; i++) {
+				int yy = current.y + dy[i];
+				int xx = current.x + dx[i];
+				
+				if (yy >= 1 && xx >= 1 && yy <= m && xx <= n) {
+					if (arr[yy][xx] == 0 && !visited[yy][xx]) {
+						visited[yy][xx] = true;
+						arr[yy][xx] = arr[current.y][current.x] + 1;
+						que.offer(new Node(yy, xx));
+					}
+				}
+				
+			}
+		}
+	}///
+	
+	
+	static class Node{
+		int y;
+		int x;
+		
+		public Node(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+	
+	
+}/////;
