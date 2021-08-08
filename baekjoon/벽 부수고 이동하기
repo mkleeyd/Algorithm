@@ -1,0 +1,94 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static int[] dy = {0,0,1,-1}; 	// 행 이동
+	static int[] dx = {1,-1,0,0};	// 열 이동
+	static int m,n;
+	static int[][] arr;
+	static boolean[][][] visited;
+	static int[][] result;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		m = Integer.parseInt(st.nextToken()); 	// 행
+		n = Integer.parseInt(st.nextToken());	// 열
+		arr = new int[m+1][n+1];
+		
+		for (int i = 1; i < m+1; i++) {
+			String input = br.readLine();
+			for (int j = 1; j < n+1; j++) {
+				arr[i][j] = input.charAt(j-1)-'0';	
+			}
+		}
+		
+		visited = new boolean[m+1][n+1][2]; 
+		result = new int[m+1][n+1];
+		System.out.println(bfs(1,1));
+	}///
+	
+	public static int bfs(int y, int x) {
+		Queue<Node> que = new LinkedList<Node>();
+		que.offer(new Node(y,x,1,0));
+		visited[y][x][0] = true;
+		visited[y][x][1] = true;
+
+		while(!que.isEmpty()) {
+			Node current = que.poll();
+			
+			if (current.y == m && current.x == n) {
+				return current.cost;
+			}
+			
+			
+			for (int i = 0; i < 4; i++) {
+				int yy = current.y + dy[i];		// 다음 행
+				int xx = current.x + dx[i];		// 다음 열
+				
+				if(yy >= 1 && xx >= 1 && yy <= m && xx <= n) {
+					if (arr[yy][xx] == 0) {
+						if (!visited[yy][xx][current.wall]) {
+							que.offer(new Node(yy,xx,current.cost+1,current.wall)); 
+							visited[yy][xx][current.wall] = true;	
+						}
+					}
+					else if (arr[yy][xx] == 1){
+						if (current.wall == 0) {
+							que.offer(new Node(yy,xx,current.cost+1,1));
+							visited[yy][xx][1] = true;
+						}
+					}
+					
+					
+				}
+			}
+		}
+		
+		return -1;
+	}///
+	
+	
+	
+	
+	static class Node{
+		int y;
+		int x;
+		int cost;
+		int wall;
+		
+		public Node(int y, int x, int cost, int wall) {
+			this.y = y;
+			this.x = x;
+			this.cost = cost;
+			this.wall = wall;
+		}
+	}
+	
+}/////
+	
