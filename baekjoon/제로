@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+
+	private static int[] arr;
+	private static int size = 0;
+	
+	public static void main(String[] args) throws IOException { 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int num = Integer.parseInt(br.readLine());
+		arr = new int[num];
+		int sum = 0;
+		
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+			if (arr[i] == 0) {
+				sum -= pop();
+			}else {
+				sum += push(arr[i]);
+			}
+		}
+		System.out.println(sum);
+	}///
+	
+	public static int push(int item) {
+		
+		int result = arr[size] = item;
+		size++;
+		return result;
+	}
+	
+	public static int pop() {
+		
+		int result = arr[size - 1];
+		arr[size - 1] = 0;
+		size--;
+		return result;
+	}
+	
+}/////
