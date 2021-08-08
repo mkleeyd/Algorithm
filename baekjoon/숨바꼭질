@@ -1,0 +1,76 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static boolean[] visited;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken()); // 수빈이 시작 위치
+		int k = Integer.parseInt(st.nextToken()); // 동생 목적지 위치
+		
+		visited = new boolean[100001];
+        if(n >= k) {
+            System.out.println(n-k);
+        } else {
+        	System.out.println(bfs(n,k));
+        }
+		
+	}///
+	
+	public static int bfs(int startIdx, int endIdx) {
+		Queue<Node> que = new LinkedList<Node>();
+		que.offer(new Node(startIdx, 0));
+		visited[startIdx] = true;
+		
+		while(!que.isEmpty()) {
+			Node current = que.poll();
+			int next = 0;
+			
+			for (int i = 0; i < 3; i++) {
+				
+				if (i == 0) {
+					next = current.next + 1;
+				}
+				else if (i == 1) {
+					next = current.next - 1;
+				}
+				else {
+					next = current.next * 2;
+				}
+				
+				if (next == endIdx) {
+					return current.cost+1;
+					
+				}
+				if (next <= 100000 && next >= 0) {
+					if (!visited[next]) {
+						visited[next] = true;
+						que.offer(new Node(next, current.cost+1));
+					}
+				}
+			}
+		}
+		
+		return 0;
+	}///
+	
+	static class Node{
+		int next;
+		int cost;
+		
+		public Node(int next, int cost) {
+			this.next = next;
+			this.cost = cost;
+		}
+	}
+	
+	
+	
+}/////
+	
