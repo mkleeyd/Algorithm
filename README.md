@@ -1,5 +1,15 @@
 # CS
 
+# OS
+
+# Server
+
+# OOP
+
+# Design Pattern
+
+# SOLID
+
 # JVM
 
 # JAVA
@@ -39,4 +49,12 @@
 # Cloud(AWS)
 
 # MSA
+
+# DB
+
+# Network
+
+# Security
+
+
 
